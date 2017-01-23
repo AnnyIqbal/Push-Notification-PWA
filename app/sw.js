@@ -20,7 +20,7 @@
 /* eslint-env browser, serviceworker, es6 */
 
 // 'use strict';
-
+/***********************************************************this code is not pasted from the relevant tutorial */
 var dataCacheName = 'hw';
 
 var cacheName = 'helloWorld';
@@ -85,4 +85,31 @@ self.addEventListener('fetch', function(e) {
       })
     );
   }
+});
+
+/************************************************************** */
+
+self.addEventListener('push', function(event) {
+  console.log('[Service Worker] Push Received.');
+  console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
+
+  const title = 'Push Codelab';
+  const options = {
+    body: 'Yay it works.',
+    icon: 'images/icon.png',
+    badge: 'images/badge.png'
+  };
+
+const notificationPromise = self.registration.showNotification(title, options);
+event.waitUntil(notificationPromise);
+});
+
+self.addEventListener('notificationclick', function(event) {
+  console.log('[Service Worker] Notification click Received.');
+
+  event.notification.close();
+
+  event.waitUntil(
+    clients.openWindow('https://developers.google.com/web/') // jo b window open krwANI USKA URL DEDO
+  );
 });
